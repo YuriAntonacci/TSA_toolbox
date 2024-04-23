@@ -72,7 +72,7 @@ set(gcf,'units','centimeters','position',[0,0,12,12])
 %% local information storage estimation and plot of the results
 Y=squeeze(Y)';
 [eAm,eSu]=idMVAR(Y,p,0);
-lvar = localVAR(eAm,eSu,10);
+lvar = localVAR(eAm,eSu,p);
 out = localInfoStorage(Y',lvar);
 is_total = out.s_y;
 
