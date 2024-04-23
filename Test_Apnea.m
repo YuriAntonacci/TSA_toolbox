@@ -3,6 +3,7 @@ clear;clc; close all
 
 load('apnea.mat'); % x=RR, y=RESP
 RESP=zscore(y,0,1);
+
 ats=[43 121 202 289 380 488 547 618 681 778 875 972 1040 1119]; %apnea tstart
 ate=[82 168 262 355 436 521 579 655 752 841 928 1006 1089 1172];  %apnea tend
 
@@ -25,8 +26,7 @@ for is = 1:numsurr+1 %cycle on surrogates
     [eAm_R,eSu_R]=idMVAR(RESP',pottmdl,0);
     
     % local- IS estimation
-    q=10;
-    lvarx = localVAR(eAm_R,eSu_R,q);
+    lvarx = localVAR(eAm_R,eSu_R,pottmdl);
     out_R = localInfoStorage(RESP,lvarx);
     ISl_R(is,:) = out_R.s_y;
 
@@ -70,6 +70,7 @@ set(gca, 'YTick', [])
 sfh1.Position = sfh1.Position + [0 0.02 0 0.037];
 
 % local IS
+q=pottmdl;
 sk=2*q;
 t=(sk:1:length(y));
 ymin=-11; ymax=10;
